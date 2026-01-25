@@ -127,6 +127,8 @@ jenkins01
 [idrac]
 database01-idrac ansible_host=192.168.0.106
 
+[quads_servers]
+
 [supermicro-6048r]
 web01-supermicro-ipmi ansible_host=192.168.0.108
 

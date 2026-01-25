@@ -32,9 +32,6 @@ host-01
 # FreeNAS server, see group_vars/all.yml for config options
 [freenas]
 
-# for QUADS server checks
-[quads_servers]
-
 # inherits server checks, includes http
 # elasticsearch, and logstash
 # kibana should be covered under http
