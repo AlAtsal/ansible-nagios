@@ -1,18 +1,20 @@
 galaxy_info:
-  author: Will Foster (@sadsfae)
+  author: Will Foster
   role_name: ansible_nagios
   namespace: sadsfae
-  description: Playbook for setting up the Nagios monitoring server and clients.
+  description: Ansible role for setting up the Nagios monitoring server and clients.
   issue_tracker_url: https://github.com/sadsfae/ansible-nagios/issues
-  license: Apache
-  min_ansible_version: 2.9
+  license: Apache-2.0
+  min_ansible_version: "2.9"
   platforms:
-  - name: EL
-    versions:
-    - 7
-    - 8
-    - 9
+    - name: EL
+      versions:
+        - "7"
+        - "8"
+        - "9"
+        - "10"
   galaxy_tags:
     - nagios
     - monitoring
+
 dependencies: []
