@@ -941,6 +941,15 @@ class PARSER:
     def main(self):
         hw_dict = {}
         hw_quantity = 0
+
+        # --- Safely fetch and parse power state ---
+        power_state = "unknown"
+        power_snmp = self.get_snmp(oids="systemPowerState")
+        if power_snmp and len(power_snmp) > 0:
+            parts = power_snmp[0].split()
+            if len(parts) > 1:
+                power_state = parts[1].lower()
+
         if self.order is None:
             self.snmp_command = "snmpwalk"  # use walk when check group or all
             snmp_data = self.get_snmp(oids=self.hardware[0])
@@ -995,6 +1004,9 @@ class PARSER:
         # --re-format output to suit hw type. Power is the most messed part!
         output = []
         exit_code = [0, "OK"]
+        if power_state == "off":
+            output.append("Powered off.  Assuming OK.")
+            return output, exit_code
         if self.hardware[2] == "PDisk":
             value_on_alert = [
                 3,
