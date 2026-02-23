@@ -67,7 +67,7 @@ conf_file = {
 }
 
 all_hardware = {
-    #'DEV': ['SNMP name', 'Description/Additional SNMP name', 'Full name', [value/search pattern]]
+    # 'DEV': ['SNMP name', 'Description/Additional SNMP name', 'Full name', [value/search pattern]]
     # Script will first read SNMP name to get snmp data form device, then use value part to search and parse info
     "MEM": [
         "memoryDeviceTable",
@@ -184,7 +184,7 @@ def is_number(parameters, x):  # input parameters and how many need to parse
     if not parameters:
         parameters = []
         for i in range(0, x):
-            y = parameters.append("none")  # auto fills 'none' if parameter not set
+            parameters.append("none")  # auto fills 'none' if parameter not set
         return parameters
     else:
         parameters = parameters.split(",")
