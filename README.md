@@ -9,7 +9,7 @@ Playbook for setting up the Nagios monitoring server and clients (CentOS/Rocky/R
 ## What does it do?
 
 - Automated deployment of Nagios Server on CentOS7, Rocky 8/9 or RHEL 7/8/9/10
-- Automated deployment of Nagios client on CentOS6/7/8, RHEL6/7/8/9/10 or Rocky, Fedora and FreeBSD
+- Automated deployment of Nagios client on CentOS6/7/8, RHEL6/7/8/9/10 or Rocky, Fedora, Ubuntu/Debian and FreeBSD
   - Generates service checks and monitored hosts from Ansible inventory
   - Generates comprehensive checks for the Nagios server itself
   - Generates comprehensive checks for all hosts/services via NRPE
