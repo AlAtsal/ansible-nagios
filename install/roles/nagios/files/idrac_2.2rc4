@@ -942,6 +942,7 @@ class PARSER:
         hw_dict = {}
         hw_quantity = 0
 
+        self.snmp_command = "snmpwalk"  # use walk when check group or all
         # --- Safely fetch and parse power state ---
         power_state = "unknown"
         power_snmp = self.get_snmp(oids="systemPowerState")
