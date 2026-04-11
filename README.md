@@ -11,6 +11,7 @@ Playbook for setting up the Nagios monitoring server and clients
 - [What does it do?](#what-does-it-do)
 - [How do I use it?](#how-do-i-use-it)
 - [Requirements](#requirements)
+  - [Collection Dependencies](#collection-dependencies)
 - [Notes](#notes)
 - [Supported Service Checks](#supported-service-checks)
 - [Nagios Server Instructions](#nagios-server-instructions)
@@ -44,6 +45,29 @@ Playbook for setting up the Nagios monitoring server and clients
 
 - Rocky, RHEL, Debian, Ubuntu Linux for Nagios server only 
 - Rocky, RHEL, Debian, Ubuntu, Fedora Linux and FreeBSD for NRPE Nagios client. 
+
+### Collection Dependencies
+
+This role requires the following Ansible collections:
+- `community.general` (for UFW firewall management)
+- `ansible.posix` (for firewalld and SELinux boolean management)
+
+**Installing via System Packages (Recommended):**
+
+RHEL/Rocky/Fedora:
+```bash
+sudo dnf install ansible-collection-community-general ansible-collection-ansible-posix
+```
+
+Debian/Ubuntu:
+```bash
+sudo apt install ansible-collection-community-general ansible-collection-ansible-posix
+```
+
+**Alternative: Installing via Ansible Galaxy:**
+```bash
+ansible-galaxy collection install -r requirements.yml
+```
 
 ## Notes
 

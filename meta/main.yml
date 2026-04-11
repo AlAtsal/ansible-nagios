@@ -27,3 +27,7 @@ galaxy_info:
     - monitoring
 
 dependencies: []
+
+collections:
+  - community.general
+  - ansible.posix
