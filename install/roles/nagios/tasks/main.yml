@@ -218,6 +218,30 @@
     mode: '0755'
   become: true
 
+# Cleanup deprecated IPMI/SuperMicro monitoring files
+- name: Remove deprecated IPMI configuration directory
+  ansible.builtin.file:
+    path: /etc/supermicro-ipmi-config
+    state: absent
+  become: true
+
+- name: Remove deprecated IPMI check plugin
+  ansible.builtin.file:
+    path: "{{ plugin_dir }}/check_ipmi_sensor"
+    state: absent
+  become: true
+
+- name: Remove deprecated IPMI config files from conf.d
+  ansible.builtin.file:
+    path: "{{ nagios_dir }}/conf.d/{{ item }}"
+    state: absent
+  loop:
+    - ipmi.cfg
+    - supermicro_6018r.cfg
+    - supermicro_6048r.cfg
+    - supermicro_1028r.cfg
+  become: true
+
 - name: Generate the nagios conf.d directory
   ansible.builtin.file:
     path: "{{ nagios_dir }}/conf.d"
