@@ -210,6 +210,13 @@ command[check_jenkins]=/usr/local/libexec/nagios/check_tcp -H localhost -p {{ je
 command[bsd_check_swap]=/usr/local/libexec/nagios/check_swap -w 60 -c 10
 command[bsd_check_uptime]=/usr/local/libexec/nagios/bsd_check_uptime
 command[bsd_check_zombie_procs]=/usr/local/libexec/nagios/check_procs -w 5 -c 10 -s Z
+{% if inventory_hostname in filemon_hosts_config %}
+{% for file in filemon_hosts_config[inventory_hostname] %}
+command[bsd_check_file_age_{{ loop.index0 }}]=/usr/local/libexec/nagios/check_file_age -f {{ file.path }} -w {{ file.warn_days | int * 86400 }} -c {{ file.crit_days | int * 86400 }}
+{% endfor %}
+{% else %}
+command[bsd_check_file_age]=/usr/local/libexec/nagios/check_file_age -f {{ filemon_target_file }} -w {{ filemon_warn_days | int * 86400 }} -c {{ filemon_crit_days | int * 86400 }}
+{% endif %}
 
 {% elif ansible_os_family == "Debian" %}
 
@@ -223,6 +230,13 @@ command[check_tcp_es]=/usr/lib/nagios/plugins/check_tcp -H localhost -p {{ elast
 command[check_jenkins]=/usr/lib/nagios/plugins/check_tcp -H localhost -p {{ jenkins_port }}
 command[check_raid]=/usr/lib/nagios/plugins/check_raid
 command[check_swap]=/usr/lib/nagios/plugins/check_swap -w 60 -c 10
+{% if inventory_hostname in filemon_hosts_config %}
+{% for file in filemon_hosts_config[inventory_hostname] %}
+command[check_file_age_{{ loop.index0 }}]=/usr/lib/nagios/plugins/check_file_age -f {{ file.path }} -w {{ file.warn_days | int * 86400 }} -c {{ file.crit_days | int * 86400 }}
+{% endfor %}
+{% else %}
+command[check_file_age]=/usr/lib/nagios/plugins/check_file_age -f {{ filemon_target_file }} -w {{ filemon_warn_days | int * 86400 }} -c {{ filemon_crit_days | int * 86400 }}
+{% endif %}
 
 {% elif ansible_os_family in ["RedHat", "Rocky"] %}
 
@@ -236,6 +250,13 @@ command[check_tcp_es]=/usr/lib64/nagios/plugins/check_tcp -H localhost -p {{ ela
 command[check_jenkins]=/usr/lib64/nagios/plugins/check_tcp -H localhost -p {{ jenkins_port }}
 command[check_raid]=/usr/lib64/nagios/plugins/check_raid
 command[check_swap]=/usr/lib64/nagios/plugins/check_swap -w 60 -c 10
+{% if inventory_hostname in filemon_hosts_config %}
+{% for file in filemon_hosts_config[inventory_hostname] %}
+command[check_file_age_{{ loop.index0 }}]=/usr/lib64/nagios/plugins/check_file_age -f {{ file.path }} -w {{ file.warn_days | int * 86400 }} -c {{ file.crit_days | int * 86400 }}
+{% endfor %}
+{% else %}
+command[check_file_age]=/usr/lib64/nagios/plugins/check_file_age -f {{ filemon_target_file }} -w {{ filemon_warn_days | int * 86400 }} -c {{ filemon_crit_days | int * 86400 }}
+{% endif %}
 
 {% endif %}
 

@@ -62,7 +62,6 @@
       - mod_ssl
       - openssl
       - net-snmp-utils
-      - freeipmi
     state: present
   become: true
   when: ansible_os_family == "RedHat"
@@ -75,35 +74,10 @@
       - ssl-cert
       - openssl
       - snmp
-      - freeipmi-tools
     state: present
     update_cache: true
   become: true
   when: ansible_os_family == "Debian"
-
-- name: Install SuperMicro Perl Dependencies (RedHat)
-  ansible.builtin.package:
-    name:
-      - perl-IPC-Run
-      - perl-IO-Tty
-      - OpenIPMI-modalias
-    state: present
-  become: true
-  when:
-    - supermicro_enable_checks | bool
-    - ansible_os_family == "RedHat"
-
-- name: Install SuperMicro Perl Dependencies (Debian)
-  ansible.builtin.apt:
-    name:
-      - libipc-run-perl
-      - libio-tty-perl
-      - openipmi
-    state: present
-  become: true
-  when:
-    - supermicro_enable_checks | bool
-    - ansible_os_family == "Debian"
 
 - name: Setup nagios SSL HTTPD vhost (RedHat)
   ansible.builtin.template:
@@ -244,30 +218,6 @@
     mode: '0755'
   become: true
 
-- name: Create nagios socket tmp files
-  ansible.builtin.file:
-    path: "{{ supermicro_ipmicfg_path }}"
-    state: directory
-    owner: nagios
-    group: nagios
-    mode: '0777'
-  become: true
-
-- name: Configure SuperMicro IPMI Check
-  ansible.builtin.copy:
-    src: check_ipmi_sensor
-    dest: "{{ plugin_dir }}/"
-    mode: '0755'
-  become: true
-
-- name: Generate the SuperMicro monitoring template
-  ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: "{{ supermicro_ipmicfg_path }}/{{ item }}"
-  loop:
-    - ipmi.cfg
-  become: true
-
 - name: Generate the nagios conf.d directory
   ansible.builtin.file:
     path: "{{ nagios_dir }}/conf.d"
@@ -290,9 +240,6 @@
     - elkservers.cfg
     - elasticsearch.cfg
     - idrac.cfg
-    - supermicro_6018r.cfg
-    - supermicro_6048r.cfg
-    - supermicro_1028r.cfg
     - jenkins.cfg
     - dns.cfg
     - dns_with_mdadm_raid.cfg
@@ -301,6 +248,7 @@
     - dns_only.cfg
     - quads_servers.cfg
     - quads_servers_with_ssl.cfg
+    - filemon_hosts.cfg
   register: nagios_config
   become: true
 
