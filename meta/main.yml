@@ -13,6 +13,15 @@ galaxy_info:
         - "8"
         - "9"
         - "10"
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
   galaxy_tags:
     - nagios
     - monitoring

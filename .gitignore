@@ -2,4 +2,5 @@
 meta/main.yml
 # no retry files
 *.retry
+.claude/
 .ansible
