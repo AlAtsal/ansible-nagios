@@ -5,10 +5,7 @@
   ansible.builtin.fail:
     msg: "You're not running a supported operating system (CentOS, RHEL 7+, Rocky, Fedora, Debian, Ubuntu, or FreeBSD)"
   when:
-    - ansible_os_family != "RedHat"
-    - ansible_os_family != "Rocky"
-    - ansible_os_family != "Debian"
-    - ansible_os_family != "FreeBSD"
+    - ansible_os_family not in ["RedHat", "Rocky", "Debian", "FreeBSD"]
 
 - name: Import EPEL GPG Key
   ansible.builtin.rpm_key:
@@ -43,6 +40,7 @@
     state: present
   become: true
   when:
+    - ansible_os_family in ["RedHat", "Rocky"]
     - ansible_distribution_major_version | int >= 8
     - ansible_system == "Linux"
 
@@ -52,6 +50,7 @@
     dest: /usr/bin/python
     state: link
   when:
+    - ansible_os_family in ["RedHat", "Rocky"]
     - ansible_distribution_major_version | int >= 8
     - ansible_python_version is version('3.6', '<')
     - ansible_system == "Linux"
