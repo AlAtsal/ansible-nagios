@@ -1,6 +1,6 @@
 # ansible-nagios
 
-Playbook for setting up the Nagios monitoring server and clients (CentOS/Rocky/RHEL/Fedora/FreeBSD)
+Playbook for setting up the Nagios monitoring server and clients (Rocky/RHEL/Debian/Ubuntu/Fedora/FreeBSD)
 
 ![Nagios](/image/ansible-nagios.png?raw=true)
 
