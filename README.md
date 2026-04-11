@@ -1,6 +1,6 @@
 # ansible-nagios
 
-Playbook for setting up the Nagios monitoring server and clients (Rocky/RHEL/Debian/Ubuntu/Fedora/FreeBSD)
+Playbook for setting up the Nagios monitoring server and clients
 
 ![Nagios](/image/ansible-nagios.png?raw=true)
 
@@ -42,8 +42,8 @@ Playbook for setting up the Nagios monitoring server and clients (Rocky/RHEL/Deb
 
 ## Requirements
 
-- CentOS7 or RHEL7/8/9 or Rocky 8/9 for Nagios server only (for now).
-- RHEL6/7/8/9, CentOS6/7/8/9, Fedora or FreeBSD for the NRPE Nagios client
+- Rocky, RHEL, Debian, Ubuntu Linux for Nagios server only 
+- Rocky, RHEL, Debian, Ubuntu, Fedora Linux and FreeBSD for NRPE Nagios client. 
 
 ## Notes
 
