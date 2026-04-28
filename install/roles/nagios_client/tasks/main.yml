@@ -76,6 +76,7 @@
       - nagios-plugins-users
       - nagios-plugins-disk
       - nagios-plugins-tcp
+      - nagios-plugins-file_age
     state: present
   become: true
   when:
@@ -93,6 +94,7 @@
       - nagios-plugins-users
       - nagios-plugins-disk
       - nagios-plugins-tcp
+      - nagios-plugins-file_age
     state: present
   become: true
   when:
