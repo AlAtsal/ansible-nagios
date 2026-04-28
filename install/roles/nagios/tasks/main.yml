@@ -115,11 +115,17 @@
   changed_when: "'already enabled' not in apache_modules.stdout and 'Enabling' in apache_modules.stdout"
   failed_when: apache_modules.rc != 0 and 'already enabled' not in apache_modules.stderr
 
-- name: Install nagios packages and common plugins (RedHat)
+- name: Install nagios-common first to create user/group (RedHat)
+  ansible.builtin.package:
+    name: nagios-common
+    state: present
+  become: true
+  when: ansible_os_family == "RedHat"
+
+- name: Install nagios packages and plugins (RedHat)
   ansible.builtin.package:
     name:
       - nagios
-      - nagios-common
       - nagios-plugins-ssh
       - nagios-plugins-tcp
       - nagios-plugins-http
@@ -137,11 +143,18 @@
   become: true
   when: ansible_os_family == "RedHat"
 
-- name: Install nagios packages and common plugins (Debian)
+- name: Install nagios4-common first to create user/group (Debian)
+  ansible.builtin.apt:
+    name: nagios4-common
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_os_family == "Debian"
+
+- name: Install nagios packages and plugins (Debian)
   ansible.builtin.apt:
     name:
       - nagios4
-      - nagios4-common
       - monitoring-plugins
       - monitoring-plugins-common
       - monitoring-plugins-standard
