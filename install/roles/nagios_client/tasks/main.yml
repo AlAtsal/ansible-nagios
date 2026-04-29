@@ -7,6 +7,24 @@
   when:
     - ansible_os_family not in ["RedHat", "Rocky", "Debian", "FreeBSD"]
 
+- name: Install gnupg2 (Legacy EL7)
+  ansible.builtin.package:
+    name: gnupg2
+    state: present
+  become: true
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version|int == 7
+
+- name: Install gnupg2
+  ansible.builtin.dnf:
+    name: gnupg2
+    state: present
+  become: true
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version|int >= 8
+
 - name: Import EPEL GPG Key
   ansible.builtin.rpm_key:
     key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
@@ -67,6 +85,7 @@
       - nagios-plugins-users
       - nagios-plugins-disk
       - nagios-plugins-tcp
+      - nagios-plugins-file_age
     state: present
   become: true
   when:
@@ -84,6 +103,7 @@
       - nagios-plugins-users
       - nagios-plugins-disk
       - nagios-plugins-tcp
+      - nagios-plugins-file_age
     state: present
   become: true
   when:

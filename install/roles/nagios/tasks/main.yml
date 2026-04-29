@@ -34,6 +34,24 @@
   when: ansible_os_family == "Debian"
 # -----------------------------------
 
+- name: Install gnupg2 (Legacy EL7)
+  ansible.builtin.package:
+    name: gnupg2
+    state: present
+  become: true
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version|int == 7
+
+- name: Install gnupg2
+  ansible.builtin.dnf:
+    name: gnupg2
+    state: present
+  become: true
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version|int >= 8
+
 - name: Import EPEL GPG Key
   ansible.builtin.rpm_key:
     key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
@@ -106,11 +124,17 @@
   changed_when: "'already enabled' not in apache_modules.stdout and 'Enabling' in apache_modules.stdout"
   failed_when: apache_modules.rc != 0 and 'already enabled' not in apache_modules.stderr
 
-- name: Install nagios packages and common plugins (RedHat)
+- name: Install nagios-common first to create user/group (RedHat)
+  ansible.builtin.package:
+    name: nagios-common
+    state: present
+  become: true
+  when: ansible_os_family == "RedHat"
+
+- name: Install nagios packages and plugins (RedHat)
   ansible.builtin.package:
     name:
       - nagios
-      - nagios-common
       - nagios-plugins-ssh
       - nagios-plugins-tcp
       - nagios-plugins-http
@@ -128,11 +152,18 @@
   become: true
   when: ansible_os_family == "RedHat"
 
-- name: Install nagios packages and common plugins (Debian)
+- name: Install nagios4-common first to create user/group (Debian)
+  ansible.builtin.apt:
+    name: nagios4-common
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_os_family == "Debian"
+
+- name: Install nagios packages and plugins (Debian)
   ansible.builtin.apt:
     name:
       - nagios4
-      - nagios4-common
       - monitoring-plugins
       - monitoring-plugins-common
       - monitoring-plugins-standard
