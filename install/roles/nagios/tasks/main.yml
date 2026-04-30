@@ -108,20 +108,21 @@
   become: true
   when: ansible_os_family == "RedHat"
 
-- name: Setup nagios SSL HTTPD vhost (Debian)
+- name: Setup nagios Apache config (Debian)
   ansible.builtin.template:
     src: nagios.conf.j2
-    dest: /etc/apache2/conf-available/nagios-ssl.conf
+    dest: /etc/apache2/conf-available/nagios4-cgi.conf
   become: true
   when: ansible_os_family == "Debian"
 
-- name: Enable Apache modules and config (Debian)
+- name: Enable Apache modules, SSL site, and nagios config (Debian)
   ansible.builtin.command: "{{ item }}"
   loop:
     - a2enmod ssl
     - a2enmod cgi
     - a2enmod rewrite
-    - a2enconf nagios-ssl
+    - a2ensite default-ssl
+    - a2enconf nagios4-cgi
   become: true
   when: ansible_os_family == "Debian"
   register: apache_modules
