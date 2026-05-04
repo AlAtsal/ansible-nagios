@@ -115,6 +115,7 @@
     name:
       - nagios-nrpe-server
       - monitoring-plugins
+      - nagios-plugins-contrib
     state: present
     update_cache: true
   become: true
