@@ -402,7 +402,7 @@
   ansible.builtin.lineinfile:
     dest: /usr/lib/systemd/system/nagios.service
     regexp: "^ExecStopPost="
-    line: "ExecStopPost=/usr/bin/rm -f /var/spool/nagios/cmd/nagios.cmd {{ nagios_log_dir }}/rw/nagios.qh"
+    line: "ExecStopPost=/usr/bin/rm -f {{ command_file }} {{ nagios_log_dir }}/rw/nagios.qh"
   register: systemd_nagios_changed
   become: true
   when: ansible_os_family == "RedHat"
